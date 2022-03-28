@@ -9,8 +9,9 @@ import styles from "@/styles/Event.module.css";
 import { useRouter } from "next/router";
 import EventMap from "@/components/EventMap";
 
+/*
 export async function getStaticPaths() {
-  const res = await fetch(`http://127.0.0.1:1337/events`);
+  const res = await fetch(`${API_URL}/events`);
   const events = await res.json();
 
   const paths = events.map((evt) => ({ params: { slug: evt.slug } }));
@@ -21,8 +22,10 @@ export async function getStaticPaths() {
   };
 }
 
+
+
 export async function getStaticProps({ params: { slug } }) {
-  const res = await fetch(`http://127.0.0.1:1337/events?slug=${slug}`);
+  const res = await fetch(`${API_URL}/events?slug=${slug}`);
 
   const events = await res.json();
 
@@ -33,6 +36,8 @@ export async function getStaticProps({ params: { slug } }) {
     revalidate: 1,
   };
 }
+
+*/
 
 export default function EventPage({ evt }) {
   return (
@@ -67,4 +72,14 @@ export default function EventPage({ evt }) {
       </div>
     </Layout>
   );
+}
+
+export async function getServerSideProps({ query: { slug } }) {
+  const events = await res.json();
+
+  return {
+    props: {
+      evt: events[0],
+    },
+  };
 }
